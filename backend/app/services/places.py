@@ -1,6 +1,7 @@
 import os
 import httpx
 
+
 async def get_attractions(lat: float, lon: float, limit: int = 15):
     key = os.getenv("OPENTRIPMAP_API_KEY")
     if not key or key == "your_key_here":
@@ -15,10 +16,15 @@ async def get_attractions(lat: float, lon: float, limit: int = 15):
         "limit": 50,
         "apikey": key,
     }
-    async with httpx.AsyncClient(timeout=15) as client:
-        r = await client.get(url, params=params)
-        r.raise_for_status()
-        items = r.json()
+    try:
+        async with httpx.AsyncClient(timeout=15) as client:
+            r = await client.get(url, params=params)
+            r.raise_for_status()
+            items = r.json()
+    except Exception as e:
+        print("Attractions lookup failed:", repr(e))
+        return []
+
     places = []
     for p in items:
         if p.get("name"):
