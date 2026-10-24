@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AI Travel Planner</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header class="hero">
+        <h1>✈️ AI Travel Planner</h1>
+        <p>Enter a destination and get a complete trip plan.</p>
+        <form id="search-form">
+            <input id="destination" type="text" placeholder="e.g. Goa, Jaipur, Paris" required minlength="2">
+            <select id="days" aria-label="Number of days">
+                <option value="2">2 days</option>
+                <option value="3" selected>3 days</option>
+                <option value="4">4 days</option>
+                <option value="5">5 days</option>
+                <option value="7">7 days</option>
+            </select>
+            <button type="submit" id="go-btn">Plan my trip</button>
+        </form>
+    </header>
+
+    <main>
+        <div id="loading" class="loading hidden">
+            <div class="spinner"></div>
+            <p>Building your plan. This can take up to a minute...</p>
+        </div>
+        <div id="error" class="error hidden"></div>
+
+        <section id="results" class="hidden">
+            <div class="summary">
+                <h2 id="place-name"></h2>
+                <p id="place-coords" class="muted"></p>
+                <p class="legend">
+                    <span class="badge live">Verified live</span> real data from public APIs &nbsp;
+                    <span class="badge ai">AI estimate</span> AI suggestions and approximate costs
+                </p>
+                <p id="cache-note" class="muted hidden"></p>
+                <div class="summary-actions">
+                    <a id="pdf-btn" class="btn-link hidden" href="#">⬇ Download PDF</a>
+                </div>
+            </div>
+
+            <div id="map"></div>
+            <p id="map-note" class="muted"></p>
+
+            <nav class="tabs" id="tabs">
+                <button data-tab="overview" class="active">Explore</button>
+                <button data-tab="itinerary">Itinerary</button>
+                <button data-tab="transport">Transport</button>
+                <button data-tab="hotels">Hotels</button>
+                <button data-tab="weather">Weather</button>
+                <button data-tab="budget">Budget</button>
+                <button data-tab="tips">Tips</button>
+            </nav>
+
+            <div id="panels">
+                <div class="panel active" id="tab-overview"></div>
+                <div class="panel" id="tab-itinerary"></div>
+                <div class="panel" id="tab-transport"></div>
+                <div class="panel" id="tab-hotels"></div>
+                <div class="panel" id="tab-weather"></div>
+                <div class="panel" id="tab-budget"></div>
+                <div class="panel" id="tab-tips"></div>
+            </div>
+
+            <section class="chat" id="chat">
+                <h3>💬 Travel assistant</h3>
+                <p class="muted">Ask a question or change your plan, for example "Make day 2 more relaxed" or "Add a
+                    beach day".</p>
+                <div id="chat-log" class="chat-log"></div>
+                <form id="chat-form" class="chat-form">
+                    <input id="chat-input" type="text" maxlength="500" placeholder="Type your message..." required>
+                    <button type="submit" id="chat-send">Send</button>
+                </form>
+            </section>
+        </section>
+    </main>
+
+    <footer>Costs and suggestions are AI estimates. Check live prices and availability on the booking sites.</footer>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="app.js"></script>
+    <script src="extras.js"></script>
+</body>
+
+</html>
