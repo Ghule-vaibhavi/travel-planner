@@ -1,5 +1,8 @@
 // Backend address. Change this when you deploy (Step 6).
-const API_URL = "http://127.0.0.1:8000";
+// Uses your local backend on your PC and the Render backend when online.
+const API_URL = ["localhost", "127.0.0.1"].includes(window.location.hostname)
+    ? "http://127.0.0.1:8000"
+    : "https://travel-planner-api-th7w.onrender.com/";
 
 const form = document.getElementById("search-form");
 const goBtn = document.getElementById("go-btn");
