@@ -53,7 +53,9 @@ async def explore(destination: str):
         attractions = await get_attractions(loc["lat"], loc["lon"])
     except HTTPException:
         raise
-    except Exception:
+    except Exception as e:
+        print("Data service error:", repr(e))
+        traceback.print_exc()
         raise HTTPException(status_code=502, detail="A data service is unavailable. Try again.")
     return {
         "location": loc,
@@ -75,7 +77,9 @@ async def plan(destination: str, days: int = Query(3, ge=1, le=10), refresh: boo
         attractions = await get_attractions(loc["lat"], loc["lon"])
     except HTTPException:
         raise
-    except Exception:
+    except Exception as e:
+        print("Data service error:", repr(e))
+        traceback.print_exc()
         raise HTTPException(status_code=502, detail="A data service is unavailable. Try again.")
 
     ai = None if refresh else get_cached(destination, days)
